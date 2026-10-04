@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="th" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYBER ACADEMY // Computational Thinking Protocol</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Bai Jamjuree & Share Tech Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        bai: ['Bai Jamjuree', 'sans-serif'],
+                        mono: ['Share Tech Mono', 'monospace'],
+                    },
+                    colors: {
+                        cyber: {
+                            bg: '#070b14',
+                            panel: 'rgba(15, 23, 42, 0.75)',
+                            cyan: '#06b6d4',
+                            cyanGlow: '#00f0ff',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            gold: '#f59e0b',
+                            green: '#10b981',
+                            red: '#f43f5e'
+                        }
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glitch': 'glitch 2s infinite',
+                        'scanline': 'scanline 8s linear infinite'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Bai Jamjuree', sans-serif;
+            background-color: #050811;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            user-select: none;
+        }
+
+        .font-mono-tech {
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        /* Cyber Background Grid */
+        .cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* Glassmorphism Panel */
+        .cyber-panel {
+            background: rgba(13, 19, 36, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15), inset 0 0 15px rgba(6, 182, 212, 0.05);
+        }
+
+        /* Neon Border Glows */
+        .glow-cyan {
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+        }
+        .glow-purple {
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+        }
+        .glow-pink {
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+        }
+        .glow-gold {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+        }
+
+        /* Interactive Card Transitions */
+        .cyber-card {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cyber-card:hover {
+            transform: translateY(-3px);
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        }
+
+        /* Selected State */
+        .card-selected {
+            border-color: #ec4899 !important;
+            box-shadow: 0 0 25px rgba(236, 72, 153, 0.7) !important;
+            background: rgba(236, 72, 153, 0.15) !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070b14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #06b6d4;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ec4899;
+        }
+
+        /* Scanline Overlay */
+        .scanlines {
+            position: relative;
+            overflow: hidden;
+        }
+        .scanlines::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 10;
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="min-h-screen cyber-grid flex flex-col justify-between text-slate-100 antialiased scanlines">
+
+    <!-- HEADER HUD BAR -->
+    <header class="sticky top-0 z-40 w-full cyber-panel border-b border-cyan-500/30 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+            
+            <!-- Logo & Title -->
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                    <i class="fa-solid fa-microchip text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-purple-400 font-mono-tech">
+                        CYBER ACADEMY <span class="text-xs px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-500/30">v3.0</span>
+                    </h1>
+                    <p class="text-xs text-slate-400">Computational Thinking Protocol</p>
+                </div>
+            </div>
+
+            <!-- Progress Tracker -->
+            <div class="flex items-center space-x-4 bg-slate-900/80 px-4 py-2 rounded-2xl border border-slate-700/60">
+                <div class="text-xs font-mono-tech">
+                    <span class="text-slate-400">MISSION:</span>
+                    <span id="hud-stage-text" class="text-cyan-400 font-bold ml-1">0 / 3</span>
+                </div>
+                <!-- Progress Bar Pill -->
+                <div class="w-28 sm:w-40 bg-slate-800 h-2.5 rounded-full overflow-hidden border border-slate-700">
+                    <div id="hud-progress-bar" class="bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 h-full w-0 transition-all duration-500"></div>
+                </div>
+            </div>
+
+            <!-- Stats & Sound Controls -->
+            <div class="flex items-center space-x-3">
+                <!-- Total Score Badge -->
+                <div class="flex items-center space-x-2 bg-slate-900/90 px-3 py-1.5 rounded-xl border border-amber-500/40 glow-gold">
+                    <i class="fa-solid fa-trophy text-amber-400 text-sm"></i>
+                    <span class="text-xs text-amber-300">SCORE:</span>
+                    <span id="hud-total-score" class="text-base font-bold font-mono-tech text-amber-400">0</span>
+                </div>
+
+                <!-- Audio Toggle Button -->
+                <button id="btn-toggle-sound" title="เปิด/ปิด เสียงสังเคราะห์" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-cyan-400 rounded-xl border border-cyan-500/30 transition hover:glow-cyan">
+                    <i id="sound-icon" class="fa-solid fa-volume-high text-base"></i>
+                </button>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT VIEWPORT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 flex items-center justify-center relative z-20">
+
+        <!-- SCREEN 0: WELCOME & BRIEFING SCREEN -->
+        <section id="screen-welcome" class="w-full max-w-4xl cyber-panel rounded-3xl p-6 sm:p-10 border border-cyan-500/40 text-center flex flex-col items-center shadow-2xl relative overflow-hidden">
+            <!-- Background Glow FX -->
+            <div class="absolute -top-24 -left-24 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -right-24 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="w-20 h-20 bg-gradient-to-tr from-cyan-500 via-purple-600 to-pink-500 rounded-2xl flex items-center justify-center text-3xl text-white shadow-xl shadow-cyan-500/30 mb-6 animate-pulse-fast">
+                <i class="fa-solid fa-shield-virus"></i>
+            </div>
+
+            <span class="px-4 py-1 rounded-full bg-cyan-950/80 text-cyan-300 border border-cyan-500/40 text-xs font-mono-tech mb-3">
+                CRITICAL ALERT // SYSTEM BREACH IN PROGRESS
+            </span>
+
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-teal-200 to-purple-300 mb-4">
+                ภารกิจกู้คืนระบบเซิร์ฟเวอร์โรงเรียน
+            </h2>
+
+            <p class="text-sm sm:text-base text-slate-300 max-w-2xl mb-8 leading-relaxed">
+                เกิดเหตุไวรัสปริศนาเข้าแทรกแซงและทำลายฐานข้อมูลระบบโรงเรียน! ในฐานะ <span class="text-cyan-400 font-bold">หัวหน้าทีม IT Security</span> คุณต้องใช้ <span class="text-purple-400 font-bold">แนวคิดเชิงคำนวณ (Computational Thinking)</span> 3 ลำดับขั้น เพื่อพิชิตไวรัสและกู้คืนระบบให้กลับมาทำงานปกติ!
+            </p>
+
+            <!-- 3 CT Principles Briefing Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full mb-8 text-left">
+                
+                <div class="bg-slate-900/80 p-4 rounded-2xl border border-cyan-500/30 hover:border-cyan-400 transition">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg mb-3">
+                        <i class="fa-solid fa-cubes"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-cyan-300 mb-1 font-mono-tech">1. DECOMPOSITION</h3>
+                    <p class="text-xs text-slate-400">การแตกย่อยปัญหาใหญ่ให้อยู่ในรูปแบบองค์ประกอบย่อยที่จัดการได้ง่าย</p>
+                </div>
+
+                <div class="bg-slate-900/80 p-4 rounded-2xl border border-purple-500/30 hover:border-purple-400 transition">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg mb-3">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-purple-300 mb-1 font-mono-tech">2. PATTERN RECOGNITION</h3>
+                    <p class="text-xs text-slate-400">การหารูปแบบ อนุกรม และความสัมพันธ์เพื่อทำความเข้าใจพฤติกรรมไวรัส</p>
+                </div>
+
+                <div class="bg-slate-900/80 p-4 rounded-2xl border border-pink-500/30 hover:border-pink-400 transition">
+                    <div class="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-lg mb-3">
+                        <i class="fa-solid fa-filter"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-pink-300 mb-1 font-mono-tech">3. ABSTRACTION</h3>
+                    <p class="text-xs text-slate-400">การคิดเชิงนามธรรม คัดกรองเฉพาะข้อมูลที่จำเป็น ละทิ้งสิ่งที่ไม่เกี่ยวข้อง</p>
+                </div>
+
+            </div>
+
+            <!-- Start Mission Button -->
+            <button id="btn-start-mission" class="px-8 py-4 bg-gradient-to-r from-cyan-500 via-purple-600 to-pink-600 hover:from-cyan-400 hover:to-pink-500 text-white font-bold text-base sm:text-lg rounded-2xl shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition transform hover:-translate-y-0.5 flex items-center space-x-3">
+                <i class="fa-solid fa-terminal"></i>
+                <span>เริ่มปฏิบัติการกู้คืนระบบ (INITIALIZE SYSTEM)</span>
+            </button>
+        </section>
+
+        <!-- STAGE 1: DECOMPOSITION SCREEN -->
+        <section id="screen-stage-1" class="w-full cyber-panel rounded-3xl p-6 sm:p-8 border border-cyan-500/40 hidden">
+            <!-- Stage Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700/60">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/20 border border-cyan-500/50 text-cyan-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-cubes"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono-tech text-cyan-400">STAGE 01 // DECOMPOSITION</span>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white">การแบ่งย่อยปัญหา (Problem Decomposition)</h2>
+                    </div>
+                </div>
+                <div class="text-xs text-slate-300 bg-slate-900/90 px-3 py-1.5 rounded-xl border border-cyan-500/30">
+                    คำสั่ง: คลิกเลือกการ์ดปัญหาย่อย แล้วคลิกใส่กล่องหมวดหมู่ที่ถูกต้อง (คะแนนเต็ม 100)
+                </div>
+            </div>
+
+            <!-- Unassigned Cards Pool -->
+            <div class="mb-6">
+                <h3 class="text-sm font-semibold text-slate-300 mb-3 flex items-center space-x-2">
+                    <i class="fa-solid fa-list-check text-cyan-400"></i>
+                    <span>การ์ดปัญหาย่อยที่พบในระบบ (คลิกเลือกการ์ดเพื่อจัดหมวดหมู่):</span>
+                </h3>
+                <div id="stage1-card-pool" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                    <!-- Cards injected via JS -->
+                </div>
+            </div>
+
+            <!-- Categories Drop Boxes -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                
+                <!-- Category 1 -->
+                <div data-cat="1" class="stage1-category-box cyber-panel rounded-2xl p-4 border-2 border-dashed border-cyan-500/40 min-h-[180px] flex flex-col justify-between transition hover:border-cyan-400 cursor-pointer">
+                    <div>
+                        <div class="flex items-center space-x-2 text-cyan-400 font-bold text-sm mb-2 pb-2 border-b border-cyan-500/20 font-mono-tech">
+                            <i class="fa-solid fa-network-wired"></i>
+                            <span>1. ฮาร์ดแวร์ & เครือข่าย</span>
+                        </div>
+                        <div class="stage1-card-container space-y-2">
+                            <!-- Assigned cards here -->
+                        </div>
+                    </div>
+                    <div class="text-center text-xs text-slate-500 mt-2 font-mono-tech hover-hint">
+                        [ คลิกเพื่อนำการ์ดที่เลือกมาวาง ]
+                    </div>
+                </div>
+
+                <!-- Category 2 -->
+                <div data-cat="2" class="stage1-category-box cyber-panel rounded-2xl p-4 border-2 border-dashed border-purple-500/40 min-h-[180px] flex flex-col justify-between transition hover:border-purple-400 cursor-pointer">
+                    <div>
+                        <div class="flex items-center space-x-2 text-purple-400 font-bold text-sm mb-2 pb-2 border-b border-purple-500/20 font-mono-tech">
+                            <i class="fa-solid fa-database"></i>
+                            <span>2. ฐานข้อมูลนักเรียน</span>
+                        </div>
+                        <div class="stage1-card-container space-y-2">
+                            <!-- Assigned cards here -->
+                        </div>
+                    </div>
+                    <div class="text-center text-xs text-slate-500 mt-2 font-mono-tech hover-hint">
+                        [ คลิกเพื่อนำการ์ดที่เลือกมาวาง ]
+                    </div>
+                </div>
+
+                <!-- Category 3 -->
+                <div data-cat="3" class="stage1-category-box cyber-panel rounded-2xl p-4 border-2 border-dashed border-pink-500/40 min-h-[180px] flex flex-col justify-between transition hover:border-pink-400 cursor-pointer">
+                    <div>
+                        <div class="flex items-center space-x-2 text-pink-400 font-bold text-sm mb-2 pb-2 border-b border-pink-500/20 font-mono-tech">
+                            <i class="fa-solid fa-globe"></i>
+                            <span>3. แอปพลิเคชันเว็บโรงเรียน</span>
+                        </div>
+                        <div class="stage1-card-container space-y-2">
+                            <!-- Assigned cards here -->
+                        </div>
+                    </div>
+                    <div class="text-center text-xs text-slate-500 mt-2 font-mono-tech hover-hint">
+                        [ คลิกเพื่อนำการ์ดที่เลือกมาวาง ]
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Control Buttons -->
+            <div class="flex flex-wrap justify-between items-center gap-4 pt-4 border-t border-slate-700/60">
+                <button id="btn-stage1-reset" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold border border-slate-600 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>เริ่มจัดหมวดหมู่ใหม่</span>
+                </button>
+
+                <button id="btn-stage1-submit" class="px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-cyan-500/30 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-check-double"></i>
+                    <span>ยืนยันการแบ่งย่อยปัญหา</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- STAGE 2: PATTERN RECOGNITION SCREEN -->
+        <section id="screen-stage-2" class="w-full cyber-panel rounded-3xl p-6 sm:p-8 border border-purple-500/40 hidden">
+            <!-- Stage Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700/60">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/20 border border-purple-500/50 text-purple-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-magnifying-glass-chart"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono-tech text-purple-400">STAGE 02 // PATTERN RECOGNITION</span>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white">การพิจารณารูปแบบ (Pattern Recognition)</h2>
+                    </div>
+                </div>
+                <div class="text-xs text-slate-300 bg-slate-900/90 px-3 py-1.5 rounded-xl border border-purple-500/30 font-mono-tech">
+                    TERMINAL VIRUS SCANNER // QUESTION <span id="s2-q-index" class="text-purple-400 font-bold">1</span> OF 3
+                </div>
+            </div>
+
+            <!-- Terminal Style Container -->
+            <div class="bg-slate-950 rounded-2xl p-4 sm:p-6 border border-purple-500/30 mb-6 shadow-inner font-mono-tech">
+                <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-800 text-xs text-slate-500">
+                    <div class="flex items-center space-x-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
+                        <span class="ml-2 text-slate-400">virus_decoder_v2.exe</span>
+                    </div>
+                    <span id="s2-question-score-tag" class="text-purple-400 font-bold">SCORE: 100 PTS</span>
+                </div>
+
+                <!-- Terminal Question Text -->
+                <div id="s2-question-title" class="text-base sm:text-lg font-bold text-purple-300 mb-4 leading-relaxed">
+                    <!-- Dynamic Question Text -->
+                </div>
+
+                <!-- Code / Data Display Box -->
+                <div id="s2-question-box" class="bg-slate-900/90 p-4 rounded-xl border border-slate-700 text-cyan-300 text-sm sm:text-base font-bold mb-6 text-center tracking-widest glow-cyan">
+                    <!-- Dynamic Sequence / Code -->
+                </div>
+
+                <!-- Multiple Choice Options Grid -->
+                <div id="s2-options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Dynamic 4 Options A, B, C, D -->
+                </div>
+            </div>
+
+            <!-- Bottom Question Nav -->
+            <div class="flex justify-between items-center pt-2">
+                <div class="text-xs text-slate-400">
+                    วิเคราะห์หารูปแบบของรหัสไวรัสเพื่อปลดล็อกเซิร์ฟเวอร์
+                </div>
+                <button id="btn-stage2-next" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-purple-500/30 transition flex items-center space-x-2 hidden">
+                    <span>ถอดรหัสข้อถัดไป</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- STAGE 3: ABSTRACTION SCREEN -->
+        <section id="screen-stage-3" class="w-full cyber-panel rounded-3xl p-6 sm:p-8 border border-pink-500/40 hidden">
+            <!-- Stage Header -->
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-700/60">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-pink-500/20 border border-pink-500/50 text-pink-400 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-filter"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-mono-tech text-pink-400">STAGE 03 // ABSTRACTION</span>
+                        <h2 class="text-xl sm:text-2xl font-bold text-white">การคิดเชิงนามธรรม (Abstraction)</h2>
+                    </div>
+                </div>
+                <div class="text-xs text-slate-300 bg-slate-900/90 px-3 py-1.5 rounded-xl border border-pink-500/30">
+                    ภารกิจ: คัดกรองเฉพาะข้อมูลที่จำเป็นสำหรับ "บัตรสรุปผลการเรียน" (คะแนนเต็ม 100)
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
+                
+                <!-- Left: Toggle Switches Grid (7 Cols) -->
+                <div class="lg:col-span-7 bg-slate-900/90 rounded-2xl p-5 border border-slate-700">
+                    <h3 class="text-sm font-bold text-pink-300 mb-4 flex items-center justify-between">
+                        <span><i class="fa-solid fa-sliders text-pink-400 mr-2"></i>รายการข้อมูลดิบในระบบ (10 รายการ):</span>
+                        <span class="text-xs text-slate-400 font-mono-tech">TOGGLE TO INCLUDE</span>
+                    </h3>
+
+                    <div id="s3-switches-container" class="space-y-2.5 max-h-[380px] overflow-y-auto pr-1">
+                        <!-- Toggles injected via JS -->
+                    </div>
+                </div>
+
+                <!-- Right: Live Preview Card Generator (5 Cols) -->
+                <div class="lg:col-span-5 flex flex-col justify-between">
+                    <div class="cyber-panel rounded-2xl p-5 border-2 border-pink-500/50 shadow-xl relative overflow-hidden bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900">
+                        
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-pink-500/30">
+                            <span class="text-xs font-mono-tech text-pink-400 flex items-center">
+                                <i class="fa-solid fa-id-card mr-1.5"></i> LIVE GRADE CARD PREVIEW
+                            </span>
+                            <span class="text-[10px] bg-pink-950 text-pink-300 border border-pink-500/40 px-2 py-0.5 rounded">
+                                SYSTEM AUTO-GEN
+                            </span>
+                        </div>
+
+                        <!-- Card Mock Body -->
+                        <div class="text-center mb-4">
+                            <div class="w-14 h-14 bg-gradient-to-tr from-pink-500 to-purple-600 rounded-full mx-auto flex items-center justify-center text-white text-2xl mb-2 shadow-lg shadow-pink-500/30">
+                                <i class="fa-solid fa-user-graduate"></i>
+                            </div>
+                            <h4 class="text-base font-bold text-white">บัตรสรุปผลการเรียนนักเรียน</h4>
+                            <p class="text-xs text-slate-400 font-mono-tech">CYBER HIGH SCHOOL // GRADE REPORT</p>
+                        </div>
+
+                        <!-- Dynamic Output Card Items -->
+                        <div id="s3-card-preview-list" class="space-y-1.5 min-h-[160px] bg-slate-950/80 p-3 rounded-xl border border-slate-800 text-xs font-mono-tech">
+                            <!-- Selected items show here live -->
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4">
+                        <button id="btn-stage3-submit" class="w-full py-3.5 bg-gradient-to-r from-pink-600 via-purple-600 to-cyan-600 hover:from-pink-500 hover:to-cyan-500 text-white rounded-xl text-sm font-bold shadow-lg shadow-pink-500/30 transition flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span>ยืนยันการคัดกรองข้อมูลสรุปผล</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FINAL SUMMARY SCREEN -->
+        <section id="screen-summary" class="w-full max-w-3xl cyber-panel rounded-3xl p-6 sm:p-10 border-2 border-amber-400/50 text-center flex flex-col items-center shadow-2xl hidden">
+            
+            <div class="w-24 h-24 bg-gradient-to-tr from-amber-400 via-purple-500 to-cyan-400 rounded-3xl flex items-center justify-center text-4xl text-slate-950 shadow-2xl shadow-amber-400/40 mb-4 animate-bounce">
+                <i class="fa-solid fa-award"></i>
+            </div>
+
+            <span class="px-4 py-1 rounded-full bg-amber-950/80 text-amber-300 border border-amber-500/40 text-xs font-mono-tech mb-2">
+                MISSION ACCOMPLISHED // SYSTEM FULLY RESTORED
+            </span>
+
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-1">
+                สรุปผลการปฏิบัติการกู้คืนระบบ
+            </h2>
+            
+            <div id="summary-rank-badge" class="px-6 py-1.5 bg-gradient-to-r from-amber-400 via-gold to-amber-500 text-slate-950 font-extrabold rounded-full text-base sm:text-lg mb-6 shadow-lg shadow-amber-500/20 font-mono-tech">
+                LEVEL: CYBER MASTER (ระดับตำนาน)
+            </div>
+
+            <!-- Score Cards Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full mb-6">
+                
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-cyan-500/30">
+                    <div class="text-[11px] text-cyan-300 font-mono-tech mb-1">STAGE 1: DECOMP.</div>
+                    <div id="sum-score-s1" class="text-xl sm:text-2xl font-black text-cyan-400 font-mono-tech">100</div>
+                </div>
+
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-purple-500/30">
+                    <div class="text-[11px] text-purple-300 font-mono-tech mb-1">STAGE 2: PATTERN</div>
+                    <div id="sum-score-s2" class="text-xl sm:text-2xl font-black text-purple-400 font-mono-tech">100</div>
+                </div>
+
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-pink-500/30">
+                    <div class="text-[11px] text-pink-300 font-mono-tech mb-1">STAGE 3: ABSTR.</div>
+                    <div id="sum-score-s3" class="text-xl sm:text-2xl font-black text-pink-400 font-mono-tech">100</div>
+                </div>
+
+                <div class="bg-slate-900/90 p-3.5 rounded-2xl border border-amber-500/30">
+                    <div class="text-[11px] text-amber-300 font-mono-tech mb-1">TOTAL SCORE</div>
+                    <div id="sum-score-total" class="text-xl sm:text-2xl font-black text-amber-400 font-mono-tech">300 / 300</div>
+                </div>
+
+            </div>
+
+            <!-- Performance Assessment Message Box -->
+            <div class="w-full bg-slate-950/80 p-4 rounded-2xl border border-slate-700 text-left mb-6 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <div class="font-bold text-amber-300 mb-1 flex items-center space-x-2">
+                    <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                    <span>ประเมินสมรรถนะแนวคิดเชิงคำนวณ (CT Evaluation Report):</span>
+                </div>
+                <p id="summary-eval-text">
+                    คุณมีความเข้าใจที่ยอดเยี่ยมในการแยกย่อยปัญหา การค้นหารูปแบบไวรัส และการคัดกรองข้อมูลเฉพาะส่วนที่สำคัญ สามารถนำทักษะนี้ไปประยุกต์ใช้ในการแก้ปัญหาคอมพิวเตอร์และชีวิตประจำวันได้อย่างมีประสิทธิภาพ!
+                </p>
+            </div>
+
+            <!-- Restart Mission Button -->
+            <button id="btn-restart-all" class="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 via-purple-600 to-pink-600 hover:from-cyan-400 hover:to-pink-500 text-white font-extrabold text-lg shadow-xl shadow-cyan-500/30 transition flex items-center justify-center space-x-3">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>เริ่มต้นปฏิบัติการใหม่อีกครั้ง (REBOOT MISSION)</span>
+            </button>
+        </section>
+
+    </main>
+
+    <!-- CUSTOM CYBERPUNK MODAL DIALOG -->
+    <div id="cyber-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+        <div id="cyber-modal-card" class="cyber-panel max-w-md w-full rounded-3xl p-6 border-2 border-cyan-400/60 shadow-2xl text-center flex flex-col items-center relative transform transition-all duration-300 scale-90">
+            
+            <div id="modal-icon-bg" class="w-16 h-16 bg-cyan-500/20 text-cyan-400 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-cyan-400/40">
+                <i id="modal-icon" class="fa-solid fa-circle-info"></i>
+            </div>
+
+            <h3 id="modal-title" class="text-xl font-bold text-white mb-2 font-mono-tech">
+                SYSTEM MESSAGE
+            </h3>
+
+            <p id="modal-body" class="text-sm text-slate-300 mb-6 leading-relaxed">
+                Modal notification content goes here.
+            </p>
+
+            <button id="btn-modal-close" class="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold rounded-xl text-sm shadow-lg transition">
+                รับทราบ (ACKNOWLEDGE)
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="w-full border-t border-slate-800 py-3 text-center text-xs text-slate-500 relative z-20">
+        <p>Cyberpunk Computational Thinking Learning Platform &copy; 2026 // Single-File HTML5 Educational Engine</p>
+    </footer>
+
+    <!-- JAVASCRIPT GAME ENGINE -->
+    <script>
+        /**
+         * CYBERPUNK COMPUTATIONAL THINKING GAME ENGINE
+         * Single-File ES6 Web Audio & Interactive UI Module
+         */
+
+        /* ------------------------------------------------------------------
+           1. WEB AUDIO API SYNTHESIZER SOUND ENGINE
+           ------------------------------------------------------------------ */
+        const SoundEngine = {
+            ctx: null,
+            enabled: true,
+
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            },
+
+            playClick() {
+                if (!this.enabled) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, now);
+                osc.frequency.exponentialRampToValueAtTime(400, now + 0.05);
+
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.05);
+            },
+
+            playSuccess() {
+                if (!this.enabled) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                
+                const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                notes.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+                    gain.gain.setValueAtTime(0.2, now + idx * 0.08);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.08 + 0.2);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+
+                    osc.start(now + idx * 0.08);
+                    osc.stop(now + idx * 0.08 + 0.2);
+                });
+            },
+
+            playError() {
+                if (!this.enabled) return;
+                this.init();
+                const now = this.ctx.currentTime;
+
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.exponentialRampToValueAtTime(110, now + 0.25);
+
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.25);
+            },
+
+            playStageClear() {
+                if (!this.enabled) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                const freqs = [440, 554.37, 659.25, 880];
+
+                freqs.forEach((freq, i) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now + i * 0.1);
+
+                    gain.gain.setValueAtTime(0.25, now + i * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.3);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+
+                    osc.start(now + i * 0.1);
+                    osc.stop(now + i * 0.1 + 0.3);
+                });
+            },
+
+            playVictory() {
+                if (!this.enabled) return;
+                this.init();
+                const now = this.ctx.currentTime;
+                const fanFar = [523.25, 659.25, 783.99, 1046.50, 880, 1046.50];
+
+                fanFar.forEach((freq, idx) => {
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+
+                    gain.gain.setValueAtTime(0.15, now + idx * 0.12);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.12 + 0.3);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+
+                    osc.start(now + idx * 0.12);
+                    osc.stop(now + idx * 0.12 + 0.3);
+                });
+            }
+        };
+
+        /* ------------------------------------------------------------------
+           2. GAME STATE MANAGEMENT
+           ------------------------------------------------------------------ */
+        const gameState = {
+            currentStage: 0, // 0: Welcome, 1: Decomposition, 2: Pattern, 3: Abstraction, 4: Summary
+            scores: {
+                stage1: 0,
+                stage2: 0,
+                stage3: 0
+            },
+            
+            // Stage 1 State
+            stage1: {
+                selectedCardId: null,
+                cards: [
+                    { id: 'c1', text: 'สาย LAN หลักห้องเซิร์ฟเวอร์โดนดักสัญญาณ', targetCat: 1, currentCat: 0 },
+                    { id: 'c2', text: 'ตารางเรียนและคะแนนเก็บหายบางส่วน', targetCat: 2, currentCat: 0 },
+                    { id: 'c3', text: 'หน้าแรกของเว็บโรงเรียนแสดงผลผิดพลาด', targetCat: 3, currentCat: 0 },
+                    { id: 'c4', text: 'อุปกรณ์ Router ไม่สามารถจ่าย IP Address ได้', targetCat: 1, currentCat: 0 },
+                    { id: 'c5', text: 'รหัสผ่านบัญชีนักเรียนถูกเข้ารหัสซ้อน', targetCat: 2, currentCat: 0 },
+                    { id: 'c6', text: 'ปุ่มส่งการบ้านบนเว็บไม่ตอบสนองเมื่อคลิก', targetCat: 3, currentCat: 0 }
+                ]
+            },
+
+            // Stage 2 State
+            stage2: {
+                currentIndex: 0,
+                questions: [
+                    {
+                        title: "ข้อ 1: ตรวจพบพฤติกรรมไวรัสที่แพร่กระจายตัวตามลำดับอนุกรมรหัสผ่าน จงหาค่าถัดไป [ ? ]",
+                        code: "[ 02, 04, 08, 16, ? ]",
+                        options: [
+                            { text: "A) 20", correct: false },
+                            { text: "B) 24", correct: false },
+                            { text: "C) 32 (เพิ่มเป็น 2 เท่า)", correct: true },
+                            { text: "D) 64", correct: false }
+                        ]
+                    },
+                    {
+                        title: "ข้อ 2: ตรวจสแกนหาโหนดสัญญาณเครือข่ายที่ถูกยึดครองตามแบบแผน จงหาชื่อโหนดถัดไป [ ? ]",
+                        code: "[ NODE-A1, NODE-B2, NODE-C3, NODE-D4, ? ]",
+                        options: [
+                            { text: "A) NODE-E5", correct: true },
+                            { text: "B) NODE-D5", correct: false },
+                            { text: "C) NODE-E4", correct: false },
+                            { text: "D) NODE-F6", correct: false }
+                        ]
+                    },
+                    {
+                        title: "ข้อ 3: วิเคราะห์พฤติกรรมชื่อไฟล์ที่ถูกไวรัสเข้ารหัส ได้แก่ 'sys_v1.lock', 'user_v2.lock', 'data_v3.lock' ข้อใดคือกฎรูปแบบ (Pattern Rule) ของไฟล์ติดไวรัสนี้?",
+                        code: "sys_v1.lock // user_v2.lock // data_v3.lock",
+                        options: [
+                            { text: "A) ขึ้นต้นด้วยชื่อประเภท + ตามด้วยเวอร์ชัน v[N] + นามสกุล .lock", correct: true },
+                            { text: "B) สุ่มตัวอักษรภาษาอังกฤษ 8 ตัวตามด้วยตัวเลข 0-9", correct: false },
+                            { text: "C) มีขนาดไฟล์เท่ากับ 1024 KB เสมอ", correct: false },
+                            { text: "D) เป็นไฟล์ประเภทปฏิบัติการ (.exe) ที่ถูกซ่อนไว้", correct: false }
+                        ]
+                    }
+                ],
+                userAnswers: [null, null, null]
+            },
+
+            // Stage 3 State
+            stage3: {
+                dataItems: [
+                    { id: 'id', label: 'รหัสประจำตัวนักเรียน', essential: true, active: true },
+                    { id: 'name', label: 'ชื่อ - นามสกุล นักเรียน', essential: true, active: true },
+                    { id: 'gpa', label: 'เกรดเฉลี่ยสะสม (GPA)', essential: true, active: true },
+                    { id: 'attendance', label: 'จำนวนวันมาเรียน / เวลาเรียน', essential: true, active: true },
+                    { id: 'color', label: 'สีที่ชอบที่สุด', essential: false, active: true },
+                    { id: 'shirt', label: 'ไซส์เสื้อนักเรียน', essential: false, active: false },
+                    { id: 'food', label: 'เมนูอาหารโปรดในโรงเรียน', essential: false, active: true },
+                    { id: 'pet', label: 'ชื่อสัตว์เลี้ยงที่บ้าน', essential: false, active: false },
+                    { id: 'zodiac', label: 'ราศี / กรุ๊ปเลือด', essential: false, active: false },
+                    { id: 'game_rank', label: 'แรงก์ในเกมออนไลน์', essential: false, active: false }
+                ]
+            }
+        };
+
+        /* ------------------------------------------------------------------
+           3. CUSTOM MODAL DIALOG HELPER
+           ------------------------------------------------------------------ */
+        function showCyberModal(title, bodyText, type = 'info', onAck = null) {
+            const modal = document.getElementById('cyber-modal');
+            const iconEl = document.getElementById('modal-icon');
+            const iconBg = document.getElementById('modal-icon-bg');
+            const titleEl = document.getElementById('modal-title');
+            const bodyEl = document.getElementById('modal-body');
+
+            titleEl.textContent = title;
+            bodyEl.innerHTML = bodyText;
+
+            if (type === 'success') {
+                iconEl.className = 'fa-solid fa-circle-check text-emerald-400';
+                iconBg.className = 'w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-emerald-400/40 glow-cyan';
+            } else if (type === 'error') {
+                iconEl.className = 'fa-solid fa-triangle-exclamation text-rose-400';
+                iconBg.className = 'w-16 h-16 bg-rose-500/20 text-rose-400 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-rose-400/40 glow-pink';
+            } else {
+                iconEl.className = 'fa-solid fa-circle-info text-cyan-400';
+                iconBg.className = 'w-16 h-16 bg-cyan-500/20 text-cyan-400 rounded-2xl flex items-center justify-center text-3xl mb-4 border border-cyan-400/40 glow-cyan';
+            }
+
+            modal.classList.remove('hidden');
+
+            const closeBtn = document.getElementById('btn-modal-close');
+            const handleClose = () => {
+                modal.classList.add('hidden');
+                closeBtn.removeEventListener('click', handleClose);
+                if (onAck) onAck();
+            };
+            closeBtn.addEventListener('click', handleClose);
+        }
+
+        /* ------------------------------------------------------------------
+           4. STAGE TRANSITION MANAGER
+           ------------------------------------------------------------------ */
+        function updateHUD() {
+            // Stage Indicator
+            document.getElementById('hud-stage-text').textContent = `${gameState.currentStage} / 3`;
+            
+            // Progress Bar
+            const progressPercent = (gameState.currentStage / 3) * 100;
+            document.getElementById('hud-progress-bar').style.width = `${progressPercent}%`;
+
+            // Total Score
+            const total = gameState.scores.stage1 + gameState.scores.stage2 + gameState.scores.stage3;
+            document.getElementById('hud-total-score').textContent = total;
+        }
+
+        function switchScreen(stageNum) {
+            gameState.currentStage = stageNum;
+            updateHUD();
+
+            // Hide all screens
+            document.getElementById('screen-welcome').classList.add('hidden');
+            document.getElementById('screen-stage-1').classList.add('hidden');
+            document.getElementById('screen-stage-2').classList.add('hidden');
+            document.getElementById('screen-stage-3').classList.add('hidden');
+            document.getElementById('screen-summary').classList.add('hidden');
+
+            // Show current screen
+            if (stageNum === 0) {
+                document.getElementById('screen-welcome').classList.remove('hidden');
+            } else if (stageNum === 1) {
+                document.getElementById('screen-stage-1').classList.remove('hidden');
+                renderStage1();
+            } else if (stageNum === 2) {
+                document.getElementById('screen-stage-2').classList.remove('hidden');
+                renderStage2Question();
+            } else if (stageNum === 3) {
+                document.getElementById('screen-stage-3').classList.remove('hidden');
+                renderStage3();
+            } else if (stageNum === 4) {
+                document.getElementById('screen-summary').classList.remove('hidden');
+                renderSummary();
+            }
+        }
+
+        /* ------------------------------------------------------------------
+           5. STAGE 1 LOGIC: DECOMPOSITION
+           ------------------------------------------------------------------ */
+        function renderStage1() {
+            const poolEl = document.getElementById('stage1-card-pool');
+            poolEl.innerHTML = '';
+
+            // Render Unassigned Cards
+            const unassigned = gameState.stage1.cards.filter(c => c.currentCat === 0);
+            
+            if (unassigned.length === 0) {
+                poolEl.innerHTML = `
+                    <div class="col-span-full text-center py-3 text-xs text-cyan-400 font-mono-tech border border-cyan-500/30 rounded-xl bg-cyan-950/30">
+                        [ การ์ดทั้งหมดถูกจัดใส่หมวดหมู่เรียบร้อยแล้ว ]
+                    </div>
+                `;
+            } else {
+                unassigned.forEach(card => {
+                    const isSelected = gameState.stage1.selectedCardId === card.id;
+                    const cardEl = document.createElement('div');
+                    cardEl.className = `cyber-card p-3.5 rounded-xl border bg-slate-900/90 text-xs sm:text-sm font-medium cursor-pointer flex items-center justify-between gap-2 ${
+                        isSelected ? 'card-selected' : 'border-slate-700 text-slate-200'
+                    }`;
+                    cardEl.innerHTML = `
+                        <span><i class="fa-solid fa-cube text-cyan-400 mr-2"></i>${card.text}</span>
+                        <i class="fa-solid fa-hand-pointer text-slate-500 text-xs"></i>
+                    `;
+                    cardEl.addEventListener('click', () => {
+                        SoundEngine.playClick();
+                        gameState.stage1.selectedCardId = isSelected ? null : card.id;
+                        renderStage1();
+                    });
+                    poolEl.appendChild(cardEl);
+                });
+            }
+
+            // Render Category Containers (1, 2, 3)
+            [1, 2, 3].forEach(catId => {
+                const box = document.querySelector(`.stage1-category-box[data-cat="${catId}"] .stage1-card-container`);
+                box.innerHTML = '';
+
+                const assigned = gameState.stage1.cards.filter(c => c.currentCat === catId);
+                assigned.forEach(card => {
+                    const cardEl = document.createElement('div');
+                    cardEl.className = 'p-2.5 bg-slate-950 rounded-lg border border-slate-700 text-xs text-slate-200 flex items-center justify-between gap-2';
+                    cardEl.innerHTML = `
+                        <span>${card.text}</span>
+                        <button title="เอาออก" class="btn-remove-card text-rose-400 hover:text-rose-300 p-1">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    `;
+                    cardEl.querySelector('.btn-remove-card').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        SoundEngine.playClick();
+                        card.currentCat = 0;
+                        renderStage1();
+                    });
+                    box.appendChild(cardEl);
+                });
+            });
+        }
+
+        // Setup Stage 1 Category Click Handlers
+        document.querySelectorAll('.stage1-category-box').forEach(box => {
+            box.addEventListener('click', () => {
+                const catId = parseInt(box.getAttribute('data-cat'));
+                if (gameState.stage1.selectedCardId) {
+                    const card = gameState.stage1.cards.find(c => c.id === gameState.stage1.selectedCardId);
+                    if (card) {
+                        SoundEngine.playClick();
+                        card.currentCat = catId;
+                        gameState.stage1.selectedCardId = null;
+                        renderStage1();
+                    }
+                }
+            });
+        });
+
+        // Reset Stage 1
+        document.getElementById('btn-stage1-reset').addEventListener('click', () => {
+            SoundEngine.playClick();
+            gameState.stage1.cards.forEach(c => c.currentCat = 0);
+            gameState.stage1.selectedCardId = null;
+            renderStage1();
+        });
+
+        // Submit Stage 1
+        document.getElementById('btn-stage1-submit').addEventListener('click', () => {
+            const unassigned = gameState.stage1.cards.filter(c => c.currentCat === 0);
+            if (unassigned.length > 0) {
+                SoundEngine.playError();
+                showCyberModal('ข้อมูลไม่ครบถ้วน', 'กรุณาจัดหมวดหมู่การ์ดปัญหาย่อยให้ครบทั้ง 6 รายการก่อนก้าวสู่ขั้นตอนถัดไป', 'error');
+                return;
+            }
+
+            // Calculate Score
+            let correctCount = 0;
+            gameState.stage1.cards.forEach(c => {
+                if (c.currentCat === c.targetCat) correctCount++;
+            });
+
+            const score = Math.round((correctCount / 6) * 100);
+            gameState.scores.stage1 = score;
+            updateHUD();
+
+            if (score >= 70) {
+                SoundEngine.playStageClear();
+                showCyberModal('STAGE 01 PASSED!', `คุณทำการแบ่งย่อยปัญหา (Decomposition) ได้ถูกต้อง ${correctCount}/6 ข้อ ได้รับคะแนน <span class="text-amber-400 font-bold">${score} คะแนน</span>`, 'success', () => {
+                    switchScreen(2);
+                });
+            } else {
+                SoundEngine.playError();
+                showCyberModal('การจัดหมวดหมู่อาจมีความคลาดเคลื่อน', `ตอบถูกต้อง ${correctCount}/6 ข้อ (ได้ ${score} คะแนน) แนะนำให้ลองปรับแต่งและเริ่มจัดหมวดหมู่ใหม่อีกครั้ง`, 'error');
+            }
+        });
+
+        /* ------------------------------------------------------------------
+           6. STAGE 2 LOGIC: PATTERN RECOGNITION
+           ------------------------------------------------------------------ */
+        function renderStage2Question() {
+            const qIndex = gameState.stage2.currentIndex;
+            const qData = gameState.stage2.questions[qIndex];
+
+            document.getElementById('s2-q-index').textContent = qIndex + 1;
+            document.getElementById('s2-question-title').textContent = qData.title;
+            document.getElementById('s2-question-box').textContent = qData.code;
+
+            const gridEl = document.getElementById('s2-options-grid');
+            gridEl.innerHTML = '';
+
+            const selectedAns = gameState.stage2.userAnswers[qIndex];
+
+            qData.options.forEach((opt, optIdx) => {
+                const isSelected = selectedAns === optIdx;
+                const optBtn = document.createElement('button');
+                optBtn.className = `p-4 rounded-xl border text-left text-xs sm:text-sm font-semibold transition flex items-center justify-between ${
+                    isSelected 
+                        ? 'bg-purple-600/30 border-purple-400 text-purple-200 glow-purple' 
+                        : 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-slate-200'
+                }`;
+                optBtn.innerHTML = `
+                    <span>${opt.text}</span>
+                    <i class="fa-solid ${isSelected ? 'fa-circle-dot text-purple-400' : 'fa-circle text-slate-600'} text-xs"></i>
+                `;
+
+                optBtn.addEventListener('click', () => {
+                    SoundEngine.playClick();
+                    gameState.stage2.userAnswers[qIndex] = optIdx;
+                    renderStage2Question();
+
+                    // Auto Advance / Submit Check
+                    if (qIndex < gameState.stage2.questions.length - 1) {
+                        setTimeout(() => {
+                            gameState.stage2.currentIndex++;
+                            renderStage2Question();
+                        }, 300);
+                    } else {
+                        // All answered -> Calculate Stage 2
+                        calculateStage2Score();
+                    }
+                });
+
+                gridEl.appendChild(optBtn);
+            });
+        }
+
+        function calculateStage2Score() {
+            let totalCorrect = 0;
+            gameState.stage2.questions.forEach((q, idx) => {
+                const userAns = gameState.stage2.userAnswers[idx];
+                if (userAns !== null && q.options[userAns].correct) {
+                    totalCorrect++;
+                }
+            });
+
+            const score = Math.round((totalCorrect / 3) * 100);
+            gameState.scores.stage2 = score;
+            updateHUD();
+
+            SoundEngine.playStageClear();
+            showCyberModal('STAGE 02 PASSED!', `คุณถอดรหัสและค้นหารูปแบบไวรัส (Pattern Recognition) ถูกต้อง ${totalCorrect}/3 ข้อ ได้รับคะแนน <span class="text-amber-400 font-bold">${score} คะแนน</span>`, 'success', () => {
+                switchScreen(3);
+            });
+        }
+
+        /* ------------------------------------------------------------------
+           7. STAGE 3 LOGIC: ABSTRACTION
+           ------------------------------------------------------------------ */
+        function renderStage3() {
+            const container = document.getElementById('s3-switches-container');
+            container.innerHTML = '';
+
+            gameState.stage3.dataItems.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between p-3 bg-slate-950 rounded-xl border border-slate-800 text-xs sm:text-sm';
+                
+                row.innerHTML = `
+                    <span class="font-medium ${item.active ? 'text-white' : 'text-slate-500'}">${item.label}</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" class="sr-only peer" ${item.active ? 'checked' : ''}>
+                        <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-pink-600"></div>
+                    </label>
+                `;
+
+                row.querySelector('input').addEventListener('change', (e) => {
+                    SoundEngine.playClick();
+                    item.active = e.target.checked;
+                    renderStage3();
+                });
+
+                container.appendChild(row);
+            });
+
+            // Live Preview Card Render
+            const previewList = document.getElementById('s3-card-preview-list');
+            previewList.innerHTML = '';
+
+            const activeItems = gameState.stage3.dataItems.filter(i => i.active);
+
+            if (activeItems.length === 0) {
+                previewList.innerHTML = `<div class="text-slate-600 text-center py-6">[ การ์ดว่างเปล่า - กรุณาเปิดสวิตช์เลือกข้อมูล ]</div>`;
+            } else {
+                activeItems.forEach(item => {
+                    const tag = document.createElement('div');
+                    tag.className = `p-2 rounded-lg flex items-center justify-between ${
+                        item.essential 
+                            ? 'bg-pink-950/40 border border-pink-500/30 text-pink-300' 
+                            : 'bg-amber-950/40 border border-amber-500/30 text-amber-300'
+                    }`;
+                    tag.innerHTML = `
+                        <span>${item.label}</span>
+                        <span class="text-[10px] px-1.5 py-0.5 rounded ${item.essential ? 'bg-pink-900 text-pink-200' : 'bg-amber-900 text-amber-200'}">
+                            ${item.essential ? 'ข้อมูลจำเป็น' : 'ข้อมูลส่วนเกิน'}
+                        </span>
+                    `;
+                    previewList.appendChild(tag);
+                });
+            }
+        }
+
+        // Submit Stage 3
+        document.getElementById('btn-stage3-submit').addEventListener('click', () => {
+            // Calculate Score: 10 items, 10 pts each correct state
+            let correctCount = 0;
+            gameState.stage3.dataItems.forEach(item => {
+                // Correct if: essential=true and active=true OR essential=false and active=false
+                if ((item.essential && item.active) || (!item.essential && !item.active)) {
+                    correctCount++;
+                }
+            });
+
+            const score = correctCount * 10;
+            gameState.scores.stage3 = score;
+            updateHUD();
+
+            SoundEngine.playVictory();
+            showCyberModal('ALL STAGES CLEARED!', `คุณทำการคัดกรองข้อมูลเชิงนามธรรม (Abstraction) ได้ถูกต้อง ${correctCount}/10 รายการ ได้รับคะแนน <span class="text-amber-400 font-bold">${score} คะแนน</span>`, 'success', () => {
+                switchScreen(4);
+            });
+        });
+
+        /* ------------------------------------------------------------------
+           8. FINAL SUMMARY RENDER LOGIC
+           ------------------------------------------------------------------ */
+        function renderSummary() {
+            const s1 = gameState.scores.stage1;
+            const s2 = gameState.scores.stage2;
+            const s3 = gameState.scores.stage3;
+            const total = s1 + s2 + s3;
+
+            document.getElementById('sum-score-s1').textContent = s1;
+            document.getElementById('sum-score-s2').textContent = s2;
+            document.getElementById('sum-score-s3').textContent = s3;
+            document.getElementById('sum-score-total').textContent = `${total} / 300`;
+
+            const rankBadge = document.getElementById('summary-rank-badge');
+            const evalText = document.getElementById('summary-eval-text');
+
+            if (total >= 270) {
+                rankBadge.textContent = "🏆 LEVEL: CYBER MASTER (ระดับตำนาน)";
+                rankBadge.className = "px-6 py-1.5 bg-gradient-to-r from-amber-400 to-yellow-500 text-slate-950 font-extrabold rounded-full text-base sm:text-lg mb-6 shadow-lg shadow-amber-500/30 font-mono-tech";
+                evalText.textContent = "ยินดีด้วย! คุณมีทักษะแนวคิดเชิงคำนวณขั้นสูง สามารถแยกย่อยปัญหา ค้นหารูปแบบอนุกรม และตัดข้อมูลส่วนเกินได้อย่างแม่นยำ เหมาะสมกับตำแหน่งหัวหน้าทีมไซเบอร์ของโรงเรียน!";
+            } else if (total >= 210) {
+                rankBadge.textContent = "🥈 LEVEL: CYBER AGENT (ระดับผู้เชี่ยวชาญ)";
+                rankBadge.className = "px-6 py-1.5 bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-extrabold rounded-full text-base sm:text-lg mb-6 shadow-lg shadow-cyan-500/30 font-mono-tech";
+                evalText.textContent = "เยี่ยมมาก! คุณผ่านเกณฑ์ประเมินทักษะแนวคิดเชิงคำนวณในระดับดีเยี่ยม สามารถแก้ไขปัญหาและกู้คืนระบบเซิร์ฟเวอร์โรงเรียนได้สำเร็จอย่างปลอดภัย!";
+            } else {
+                rankBadge.textContent = "🥉 LEVEL: CYBER NOVICE (ระดับผ่านเกณฑ์)";
+                rankBadge.className = "px-6 py-1.5 bg-gradient-to-r from-purple-400 to-pink-500 text-slate-950 font-extrabold rounded-full text-base sm:text-lg mb-6 shadow-lg shadow-purple-500/30 font-mono-tech";
+                evalText.textContent = "คุณสามารถกู้คืนระบบได้สำเร็จตามเป้าหมายพื้นฐาน แนะนำให้ทบทวนหลักการคิดเชิงนามธรรมและการหารูปแบบเพิ่มเติมเพื่อพัฒนาสู่ระดับผู้เชี่ยวชาญ!";
+            }
+        }
+
+        /* ------------------------------------------------------------------
+           9. GLOBAL INITIALIZATION & EVENT LISTENERS
+           ------------------------------------------------------------------ */
+        window.addEventListener('load', () => {
+            // Start Mission Button
+            document.getElementById('btn-start-mission').addEventListener('click', () => {
+                SoundEngine.init();
+                SoundEngine.playClick();
+                switchScreen(1);
+            });
+
+            // Sound Toggle Button
+            document.getElementById('btn-toggle-sound').addEventListener('click', () => {
+                SoundEngine.enabled = !SoundEngine.enabled;
+                const icon = document.getElementById('sound-icon');
+                icon.className = SoundEngine.enabled ? 'fa-solid fa-volume-high' : 'fa-solid fa-volume-xmark text-rose-400';
+                if (SoundEngine.enabled) SoundEngine.playClick();
+            });
+
+            // Reboot All Game State
+            document.getElementById('btn-restart-all').addEventListener('click', () => {
+                SoundEngine.playClick();
+                gameState.scores = { stage1: 0, stage2: 0, stage3: 0 };
+                gameState.stage1.cards.forEach(c => c.currentCat = 0);
+                gameState.stage2.currentIndex = 0;
+                gameState.stage2.userAnswers = [null, null, null];
+                switchScreen(0);
+            });
+
+            // Initialize HUD
+            updateHUD();
+        });
+    </script>
+</body>
+</html>
